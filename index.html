@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="style/style.css">
         <link rel="stylesheet" href="style/tweet.css">
         <script src="https://kit.fontawesome.com/c939d0e917.js" crossorigin="anonymous"></script>
+        <script src ="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     </head>
     <body>
         <div class="container home-page">
@@ -30,12 +31,12 @@
             </div>
          <div class="main">
             <div class="tweets-search-container">
-                <input id="user-search-input" type="text" placeholder="Search Twitter">
-                <i class="fas fa-search fa-flip-horizontal"></i>
+                <input id="user-search-input" type="text" onkeyup="onEnter(event)" placeholder="Search Twitter">
+                <i class="fas fa-search fa-flip-horizontal" onclick="getTwitterData()"></i>
             </div>
 
             <div class="tweets-list">
-                <div class="tweet-container">
+                <!-- <div class="tweet-container">
                     <div class="tweet-user-info">
                         <div class="tweet-user-profile">
                             
@@ -51,8 +52,14 @@
 
                     </div>
 
-                    <div class="tweet-images-container">
 
+                    <div class="tweet-video-container">
+                        <video controls>
+                            <source src="" type="">      
+                        </video>
+                    </div>
+                    <div class="tweet-images-container">
+                        <div class="tweet-image" style="background-image: url();"></div>
                     </div>
 
                     <div class="tweet-text-container">
@@ -63,7 +70,11 @@
                         20 hours ago
                     </div>
 
-                </div>
+                </div> -->
+            </div>
+
+            <div class="next-page-container" onclick="onNextPage()">
+                <i class ="fas fa-arrow-down"></i>
             </div>
          </div>
           
@@ -72,9 +83,9 @@
                 <div class="tweets-trending">
                     <h5>Trends for you</h5>
                     <ul>
-                        <li>#Coding</li>
-                        <li>#JavaSript</li>
-                        <li>#Python</li>
+                        <li onclick="selectTrend(this)">#Coding</li>
+                        <li onclick="selectTrend(this)">#JavaScript</li>
+                        <li onclick="selectTrend(this)">#Python</li>
                     </ul>
                 </div>
              </div>

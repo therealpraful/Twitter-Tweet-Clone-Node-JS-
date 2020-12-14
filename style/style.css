@@ -69,11 +69,13 @@ body {
     color: white;
     font-size: 30px;
     padding-left: 10px;
+    cursor: pointer;
 }
 
 .tweets-search-container{
     margin: 20px;
     margin-top: 30px;
+    margin-bottom: 0;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #979797;    
@@ -97,6 +99,7 @@ body {
 
 .tweets-list {
     margin:20px;  
+    margin-top: 0;
 }
 
 .tweets-sidebar-container {
@@ -147,3 +150,19 @@ body {
     cursor: pointer;
 }
 
+.next-page-container {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color:#47525D;
+    border: 1px solid #1c1c1c;
+    border-radius: 20px;
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.next-page-container :hover{
+    background-color: #1c1c1c;
+}
