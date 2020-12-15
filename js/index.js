@@ -1,5 +1,8 @@
-const URL = "http://localhost:3000/tweets";
-const trendURL = "http://localhost:3000/trends/?id=23424848";
+// const URL = "http://localhost:3000/tweets";
+// const trendURL = "http://localhost:3000/trends/?id=23424848";
+
+const URL = "https://praful-twittercloneapi.herokuapp.com/tweets";
+const trendURL = "https://praful-twittercloneapi.herokuapp.com/trends/?id=23424848";
 
 /**
  * Retrive Twitter Data from API
@@ -24,7 +27,7 @@ const trendURL = "http://localhost:3000/trends/?id=23424848";
     let trendContent = `<div class="tweets-trending">
                         <h5>Trends for you</h5>
                         <ul>`;
-    for(let i=0;i<4;i++){  // Only F4 trends we want
+    for(let i=0;i<4;i++){  // Only 4 trends we want
         console.log(trends[i].name)
         trendContent += `
         <li onclick="selectTrend(this)">${trends[i].name}</li>
