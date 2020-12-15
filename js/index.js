@@ -8,23 +8,23 @@ const URL = "http://localhost:3000/tweets";
 
  const onEnter = (e) => {
      if(e.key == "Enter"){
-        getTwitterData()
+        getTwitterData();
      }
  }
 
  const onNextPage = () => {
      if(nextPageUrl){
-         getTwitterData()
+         getTwitterData(true);
      }
  }
 
 
-const getTwitterData = () => {
+const getTwitterData = (nextPage=false) => {
     let query = document.getElementById("user-search-input").value;
     if(!query) return;
     const encodedQuery = encodeURIComponent(query); //for encoding #symbol
     let fullUrl = `${URL}?q=${encodedQuery}&count=10`;
-    if(nextPageUrl){
+    if(nextPage && nextPageUrl){
         fullUrl = nextPageUrl;
     }
     fetch(fullUrl ,{
@@ -32,8 +32,9 @@ const getTwitterData = () => {
     }).then((response) => {
         return response.json();
     }).then((tweets) =>  {
-        buildTweets(tweets.statuses);
-        saveNextPage(tweets.search_metadata)
+        buildTweets(tweets.statuses,nextPage);
+        saveNextPage(tweets.search_metadata);
+        nextPageButtonVisibility(tweets.search_metadata);
     })
 }
 
@@ -54,7 +55,7 @@ const saveNextPage = (metadata) => {
  */
 const selectTrend = (e) => {
     const text = e.innerHTML;
-    console.log(text)
+
     document.getElementById("user-search-input").value = text;
     getTwitterData();
 }
@@ -63,12 +64,18 @@ const selectTrend = (e) => {
  * Set the visibility of next page based on if there is data on next page
  */
 const nextPageButtonVisibility = (metadata) => {
+    if(metadata.next_results){
+        document.getElementById('next-page').style.visibility = "visible";
+    }else {
+        document.getElementById('next-page').style.visibility = "hidden";
+    }
 }
 
 /**
  * Build Tweets HTML based on Data from API
  */
 const buildTweets = (tweets, nextPage) => {
+ 
     let twitterContent = "";
     tweets.map((tweet) => {
         const createdDate = moment(tweet.created_at).fromNow()
@@ -105,7 +112,12 @@ const buildTweets = (tweets, nextPage) => {
                 </div>
                 `
     })
-    document.querySelector('.tweets-list').innerHTML = twitterContent;
+    if(nextPage){
+        document.querySelector('.tweets-list').insertAdjacentHTML("beforeend",twitterContent);
+    }else{
+        document.querySelector('.tweets-list').innerHTML = twitterContent;
+    }
+    
 }
 
 /**
@@ -129,25 +141,27 @@ const buildImages = (mediaList) => {
  */
 const buildVideo = (mediaList) => {
     let videoContent = `<div class="tweet-video-container">`;
-    let imageExists = false;
+    let videoExists = false;
     mediaList.map((media)=>{
         if(media.type == "video"){
-            imageExists = true;
+            videoExists = true;
+            const videoVariant = media.video_info.variants.find((variant) => variant.content_type == 'video/mp4');
             videoContent += `
             <video controls>
-                <source src="${media.video_info.variants[0].url}" type="video/mp4">      
+                <source src="${videoVariant.url}" type="video/mp4">      
             </video>
             `
         } else if(media.type == "animated_gif"){
-            imageExists = true;
+            videoExists = true;
+            const videoVariant = media.video_info.variants.find((variant) => variant.content_type == 'video/mp4');
             videoContent += `
             <video loop autoplay>
-                <source src="${media.video_info.variants[0].url}" type="video/mp4">      
+                <source src="${videoVariant.url}" type="video/mp4">      
             </video>
             `
         }
     })
     videoContent += `</div>`;
-    return imageExists ? videoContent : '';
+    return videoExists ? videoContent : '';
 }
 
