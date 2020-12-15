@@ -7,6 +7,5 @@ This Twitter  Web App allow user to all the tweets on spefic topic . Twitter sea
 - HTML5
 - CSS3 
 - FlexBox
-- Node.js
-- Express.js
-- Rest APIs
+- Fetch API
+- Moment JS
